@@ -1,4 +1,5 @@
 import 'package:chart_try/colors.dart';
+import 'package:chart_try/side_arrow_clipper.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -19,60 +20,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const Home(),
-      // home: const WidgetTest(),
+      
     );
   }
 }
 
-class WidgetTest extends StatelessWidget {
-  const WidgetTest({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: callPriceIconWidget()),
-      // body: Center(child: ltpIconWidget()),
-    );
-  }
-
-  Widget callPriceIconWidget() {
-    return Container(
-      width: 54.5,
-      height: 22,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topRight: Radius.circular(5),
-            topLeft: Radius.circular(11.5),
-            bottomLeft: Radius.circular(11.5),
-            bottomRight: Radius.circular(5)),
-        color: Colors.amber,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [Text('c'), Text('100')],
-      ),
-    );
-  }
-
-  Widget ltpIconWidget() {
-    return Container(
-      width: 49,
-      height: 22,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topRight: Radius.circular(11.5),
-            topLeft: Radius.circular(11.5),
-            bottomLeft: Radius.circular(11.5),
-            bottomRight: Radius.circular(2)),
-        color: Colors.amber,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [Text('a'), Text('121')],
-      ),
-    );
-  }
-}
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -154,6 +107,7 @@ class _LineChart extends StatelessWidget {
             ),
             // white line for call price
             HorizontalLine(
+              //todo: align this horizontal line
               y: 3,
               strokeWidth: 2,
               color: Colors.white,
@@ -182,6 +136,7 @@ class _LineChart extends StatelessWidget {
             ),
           ],
         ),
+        //todo: change maxX, minX, maxY, minY dynamically
         minX: 0,
         maxX: 14,
         maxY: 6,
@@ -258,16 +213,16 @@ class _LineChart extends StatelessWidget {
 
   List<LineChartBarData> lineBarData = [
     LineChartBarData(
-      spots: mySpots,
-      // spots: const [
-      //   FlSpot(1, 1),
-      //   FlSpot(3, 4),
-      //   FlSpot(5, 1.6),
-      //   FlSpot(7, 5),
-      //   FlSpot(10, 2),
-      //   FlSpot(12, 2.6),
-      //   FlSpot(13, 4),
-      // ],
+      // spots: mySpots,
+      spots: const [
+        FlSpot(1, 1),
+        FlSpot(3, 4),
+        FlSpot(5, 1.6),
+        FlSpot(7, 5),
+        FlSpot(10, 2),
+        FlSpot(12, 2.6),
+        FlSpot(13, 4),
+      ],
       isCurved: false,
       colors: blackGradientColors,
       barWidth: 3,
