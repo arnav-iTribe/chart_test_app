@@ -1,4 +1,5 @@
 import 'package:chart_try/colors.dart';
+import 'package:chart_try/ltp_callprice_widgets.dart';
 import 'package:chart_try/side_arrow_clipper.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +20,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Home(),
-      
+      // home: const Home(),
+      home: const WidgetTest(),
     );
   }
 }
-
-
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -89,10 +88,10 @@ class _LineChart extends StatelessWidget {
           ],
         ),
         backgroundColor: Colors.transparent,
-        lineTouchData: LineTouchData(enabled: false),
         gridData: FlGridData(show: false),
         titlesData: FlTitlesData(show: false),
         borderData: FlBorderData(show: false),
+        lineTouchData: LineTouchData(enabled: false),
         lineBarsData: lineBarData,
         extraLinesData: ExtraLinesData(
           horizontalLines: [
@@ -107,6 +106,9 @@ class _LineChart extends StatelessWidget {
             ),
             // white line for call price
             HorizontalLine(
+              // image: ,
+              // sizedPicture: ,
+
               //todo: align this horizontal line
               y: 3,
               strokeWidth: 2,
@@ -116,7 +118,7 @@ class _LineChart extends StatelessWidget {
                 // alignment: plot.maxY == widget.targetPrice
                 //     ? Alignment.bottomLeft
                 //     : Alignment.topLeft,
-                labelResolver: (d) => 'call price widget here',
+                labelResolver: (d) => 'call widget',
                 // style: kCaption1,
               ),
             ),
@@ -228,6 +230,7 @@ class _LineChart extends StatelessWidget {
       barWidth: 3,
       curveSmoothness: 0.5,
       isStrokeCapRound: true,
+
       // dotData: FlDotData(show: false),
       dotData: FlDotData(
         // checkToShowDot: (spot, barData) {
@@ -371,52 +374,6 @@ class _LineChart extends StatelessWidget {
             getDotPainter: (spot, percent, barData, index) =>
                 FlDotArrowDownPainter(size: 5)),
       ),
-
-      ///
-      /// [Reward Line]
-      ///
-      // LineChartBarData(
-      //   spots: [
-      //     FlSpot(plot.maxX / 1.8, widget.callPrice),
-      //     FlSpot(
-      //         plot.maxX / 1.8, (widget.targetPrice + widget.callPrice) / 2),
-      //     FlSpot(plot.maxX / 1.8, widget.targetPrice),
-      //   ],
-      //   colors: const [Colors.black],
-      //   barWidth: 1,
-      //   isStrokeCapRound: true,
-      //   dotData: FlDotData(
-      //     show: false,
-      //   ),
-      // ),
-      // LineChartBarData(
-      //   spots: [
-      //     FlSpot(plot.maxX / 1.8, widget.callPrice),
-      //   ],
-      //   colors: const [Colors.black],
-      //   barWidth: 1,
-      //   isStrokeCapRound: true,
-      //   dotData: FlDotData(
-      //     show: true,
-      //     getDotPainter: (spot, percent, barData, index) => buy
-      //         ? FlDotArrowDownPainter(size: 7)
-      //         : FlDotArrowPainter(size: 7),
-      //   ),
-      // ),
-      // LineChartBarData(
-      //   spots: [
-      //     FlSpot(plot.maxX / 1.8, widget.targetPrice),
-      //   ],
-      //   colors: const [Colors.black],
-      //   barWidth: 1,
-      //   isStrokeCapRound: true,
-      //   dotData: FlDotData(
-      //     show: true,
-      //     getDotPainter: (spot, percent, barData, index) => buy
-      //         ? FlDotArrowPainter(size: 7)
-      //         : FlDotArrowDownPainter(size: 7),
-      //   ),
-      // ),
     ]
   ];
 

@@ -19,13 +19,39 @@ class WidgetTest extends StatelessWidget {
           //       bottomRight: Radius.circular(5)),
           //   color: Colors.amber,
           // ),
+          // child: Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: ClipPath(
+          //     clipper: SideArrowClipper(),
+          //     child: callPriceIconWidget(),
+          //   ),
+          // ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ClipPath(
-              clipper: SideArrowClipper(),
-              child: callPriceIconWidget(),
-            ),
+            child: callWidget(),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget callWidget() {
+    return ClipPath(
+      clipper: CallWidgetClipper(),
+      child: Container(
+        width: 54.5,
+        height: 28,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(5),
+              topLeft: Radius.circular(11.5),
+              bottomLeft: Radius.circular(11.5),
+              bottomRight: Radius.circular(5)),
+          color: Colors.blue,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [Text('⚪'), Text('Buy')],
         ),
       ),
     );
