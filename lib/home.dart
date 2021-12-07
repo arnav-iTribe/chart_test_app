@@ -10,6 +10,13 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double stopLossPrice = 509;
+    const double targetPrice = 555;
+    const double stopLossPercentage = 8;
+    const double currentGainPercentage = 2.6;
+    const double potentialGainPercentage = 13;
+    const double callPrice = 3;
+    const double lastTradedPrice = 4;
     return SafeArea(
       child: Scaffold(
           body: Column(
@@ -18,7 +25,7 @@ class Home extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          const Text('for buy call'),
+          const Text('Buy call'),
           const SizedBox(
             height: 50,
           ),
@@ -33,38 +40,40 @@ class Home extends StatelessWidget {
               const Positioned(
                 top: 5,
                 left: 40,
-                child: Text('+13%'),
+                child: Text('+$potentialGainPercentage%'),
               ),
               const Positioned(
                 bottom: 5,
                 left: 40,
-                child: Text('-8%'),
+                child: Text('-$stopLossPercentage%'),
               ),
               const Positioned(
                 top: 5,
                 right: 30,
-                child: Text('555'),
+                child: Text('$targetPrice'),
               ),
               const Positioned(
                 bottom: 5,
                 right: 30,
-                child: Text('509'),
+                child: Text('$stopLossPrice'),
               ),
               Positioned(
-                top: 65, //todo: dynamic
+                // top: 65, //todo: dynamic
+                bottom: callPrice*21.42 , // 150/7 = 21.42               
                 left: 30,
-                child: callPriceIconWidget(),
+                child: callPriceIconWidget(callPrice),
               ),
               Positioned(
-                top: 20, //todo: dynamic
+                // top: 20, //todo: dynamic
+                bottom: lastTradedPrice*21.42 + 22,
                 right: 90,
-                child: ltpIconWidget(),
+                child: ltpIconWidget(lastTradedPrice),
               ),
               const Positioned(
                 top: 55, //todo: dynamic
-                // top: 200,
+                // top: callPrice*21.42 - 10,
                 right: 30,
-                child: Text('+2.5%'),
+                child: Text('+$currentGainPercentage%'),
               ),
             ],
           ),
@@ -73,7 +82,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget callPriceIconWidget() {
+  Widget callPriceIconWidget(double callPrice) {
     return ClipPath(
       clipper: SideArrowClipper(),
       child: Container(
@@ -89,13 +98,13 @@ class Home extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [Text('c'), Text('520')],
+          children: [Text('c'), Text('$callPrice')],
         ),
       ),
     );
   }
 
-  Widget ltpIconWidget() {
+  Widget ltpIconWidget(double lastTradedPrice) {
     return Container(
       width: 49,
       height: 22,
@@ -109,7 +118,7 @@ class Home extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [Text('l'), Text('530')],
+        children: [Text('l'), Text('$lastTradedPrice')],
       ),
     );
   }
@@ -119,8 +128,8 @@ class _LineChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:150,
-      width:258,
+      height: 150,
+      width: 258,
       // aspectRatio: 1.72,
       child: LineChart(
         LineChartData(
@@ -201,31 +210,33 @@ class _LineChart extends StatelessWidget {
     );
   }
 
-  static List<double> prices = [
-    345.5,
-    336.05,
-    334.7,
-    334.75,
-    323,
-    330.7,
-    407.95,
-    403.5,
-    407.25,
-    376.85,
-    374.85,
-    374.8,
-    383.1
-  ];
+  // static List<double> prices = [
+  //   345.5,
+  //   336.05,
+  //   334.7,
+  //   334.75,
+  //   323,
+  //   330.7,
+  //   407.95,
+  //   403.5,
+  //   407.25,
+  //   376.85,
+  //   374.85,
+  //   374.8,
+  //   383.1
+  // ];
 
-  static List<FlSpot> mySpots = prices.asMap().entries.map((e) {
-    return FlSpot(e.key.toDouble(), e.value);
+  static List<double> prices2 = [1,4,1.6,5,2,2.6,4,2.6,4,2.6,1.2,5,2.3,4];
+
+  static List<FlSpot> mySpots = prices2.asMap().entries.map((e) {
+    return FlSpot(e.key.toDouble()+1, e.value);
   }).toList();
 
   List<LineChartBarData> lineBarData = [
     LineChartBarData(
       // spots: mySpots,
       spots: const [
-        FlSpot(1, 1),
+        FlSpot(2, 1),
         FlSpot(3, 4),
         FlSpot(5, 1.6),
         FlSpot(7, 5),
@@ -238,7 +249,6 @@ class _LineChart extends StatelessWidget {
       barWidth: 3,
       curveSmoothness: 0.5,
       isStrokeCapRound: true,
-
       // dotData: FlDotData(show: false),
       dotData: FlDotData(
         // checkToShowDot: (spot, barData) {
