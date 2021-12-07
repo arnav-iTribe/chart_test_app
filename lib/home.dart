@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'arrow_painter.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class ChartWidget extends StatelessWidget {
+  const ChartWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,17 +57,19 @@ class Home extends StatelessWidget {
                 right: 30,
                 child: Text('$stopLossPrice'),
               ),
-              Positioned(
+              const Positioned(
                 // top: 65, //todo: dynamic
-                bottom: callPrice*21.42 , // 150/7 = 21.42               
+                bottom: callPrice * 21.42, // 150/7 = 21.42
                 left: 30,
-                child: callPriceIconWidget(callPrice),
+                child: CallPriceIconWidget(callPrice: callPrice),
               ),
-              Positioned(
+              const Positioned(
                 // top: 20, //todo: dynamic
-                bottom: lastTradedPrice*21.42 + 22,
+                bottom: lastTradedPrice * 21.42 + 22,
                 right: 90,
-                child: ltpIconWidget(lastTradedPrice),
+                child: LastTradedPriceIconWidget(
+                  lastTradedPrice: lastTradedPrice,
+                ),
               ),
               const Positioned(
                 top: 55, //todo: dynamic
@@ -79,47 +81,6 @@ class Home extends StatelessWidget {
           ),
         ],
       )),
-    );
-  }
-
-  Widget callPriceIconWidget(double callPrice) {
-    return ClipPath(
-      clipper: SideArrowClipper(),
-      child: Container(
-        width: 54.5,
-        height: 22,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(5),
-              topLeft: Radius.circular(11.5),
-              bottomLeft: Radius.circular(11.5),
-              bottomRight: Radius.circular(5)),
-          color: Colors.white,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [Text('c'), Text('$callPrice')],
-        ),
-      ),
-    );
-  }
-
-  Widget ltpIconWidget(double lastTradedPrice) {
-    return Container(
-      width: 49,
-      height: 22,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-            topRight: Radius.circular(11.5),
-            topLeft: Radius.circular(11.5),
-            bottomLeft: Radius.circular(11.5),
-            bottomRight: Radius.circular(2)),
-        color: Colors.white,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [Text('l'), Text('$lastTradedPrice')],
-      ),
     );
   }
 }
@@ -226,10 +187,25 @@ class _LineChart extends StatelessWidget {
   //   383.1
   // ];
 
-  static List<double> prices2 = [1,4,1.6,5,2,2.6,4,2.6,4,2.6,1.2,5,2.3,4];
+  static List<double> prices2 = [
+    1,
+    4,
+    1.6,
+    5,
+    2,
+    2.6,
+    4,
+    2.6,
+    4,
+    2.6,
+    1.2,
+    5,
+    2.3,
+    4
+  ];
 
   static List<FlSpot> mySpots = prices2.asMap().entries.map((e) {
-    return FlSpot(e.key.toDouble()+1, e.value);
+    return FlSpot(e.key.toDouble() + 1, e.value);
   }).toList();
 
   List<LineChartBarData> lineBarData = [
@@ -388,10 +364,66 @@ class _LineChart extends StatelessWidget {
         barWidth: 1,
         isStrokeCapRound: true,
         dotData: FlDotData(
-            show: true,
-            getDotPainter: (spot, percent, barData, index) =>
-                FlDotArrowDownPainter(size: 5)),
+          show: true,
+          getDotPainter: (spot, percent, barData, index) =>
+              FlDotArrowDownPainter(size: 5),
+        ),
       ),
     ]
   ];
+}
+
+class CallPriceIconWidget extends StatelessWidget {
+  const CallPriceIconWidget({Key? key, required this.callPrice})
+      : super(key: key);
+
+  final double callPrice;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: SideArrowClipper(),
+      child: Container(
+        width: 54.5,
+        height: 22,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(5),
+              topLeft: Radius.circular(11.5),
+              bottomLeft: Radius.circular(11.5),
+              bottomRight: Radius.circular(5)),
+          color: Colors.white,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [Text('c'), Text('$callPrice')],
+        ),
+      ),
+    );
+  }
+}
+
+class LastTradedPriceIconWidget extends StatelessWidget {
+  const LastTradedPriceIconWidget({Key? key, required this.lastTradedPrice})
+      : super(key: key);
+  final double lastTradedPrice;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 49,
+      height: 22,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(11.5),
+            topLeft: Radius.circular(11.5),
+            bottomLeft: Radius.circular(11.5),
+            bottomRight: Radius.circular(2)),
+        color: Colors.white,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [Text('l'), Text('$lastTradedPrice')],
+      ),
+    );
+  }
 }
